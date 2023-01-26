@@ -11,27 +11,38 @@
         <div id="todo-list"></div>
         <script>
             // Model
-            
-            let todos = [{
-                title: 'buy food',
-                dueDate: '2023-12-12',
-                id: 'id1'
-            },
-            {
-                title: 'buy condoms',
-                dueDate: '2023-12-12',
-                id: 'id2'
-            },
-            {
-                title: 'book a hotel',
-                dueDate: '2023-12-12',
-                id: 'id3'
-            },
-            {
-                title: 'call babe',
-                dueDate: '2023-12-12',
-                id: 'i6d4'
-            }];
+            // If localStorage has a todos array, then use it
+            // Otherwise use the defualt array
+            let todos;
+
+            // Retrieve localStorage
+            const savedTodos = JSON.parse(localStorage.getItem('todos'));
+           // check if it's an array
+            if (Array.isArray(savedTodos)) {
+                todos = savedTodos;
+            } else {
+                    todos = [{
+                    title: 'buy food',
+                    dueDate: '2023-12-12',
+                    id: 'id1'
+                },
+                {
+                    title: 'buy condoms',
+                    dueDate: '2023-12-12',
+                    id: 'id2'
+                },
+                {
+                    title: 'book a hotel',
+                    dueDate: '2023-12-12',
+                    id: 'id3'
+                },
+                {
+                    title: 'call babe',
+                    dueDate: '2023-12-12',
+                    id: 'i6d4'
+                }];
+            }
+
             // Creates a todo
             function createTodo (title, dueDate) {
                 const id = ''+new Date().getTime(); //converting to string
@@ -41,6 +52,8 @@
                     dueDate: dueDate,
                     id: id
                 });
+
+                saveTodos();
             }
 
             // Deletes a todo
@@ -53,9 +66,14 @@
                         return true;
                     }
                 });
+
+                saveTodos();
             };
 
-//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\
+        function saveTodos() {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             render();
 
             // Controller
