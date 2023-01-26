@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <title>Todo app</title>
+    </head>
+    <body>
+        <div><h1>Todo app</h1></div>
+        <input id="date-picker" type="date"/>
+        <input id="todo-title" type='text'></input>
+        <button onclick="addTodo()">Press me!</button>
+
+        <div id="todo-list"></div>
+        <script>
+            // Model
+            
+            let todos = [{
+                title: 'buy food',
+                dueDate: '2023-12-12',
+                id: 'id1'
+            },
+            {
+                title: 'buy condoms',
+                dueDate: '2023-12-12',
+                id: 'id2'
+            },
+            {
+                title: 'book a hotel',
+                dueDate: '2023-12-12',
+                id: 'id3'
+            },
+            {
+                title: 'call babe',
+                dueDate: '2023-12-12',
+                id: 'i6d4'
+            }];
+            // Creates a todo
+            function createTodo (title, dueDate) {
+                const id = ''+new Date().getTime(); //converting to string
+
+                todos.push({
+                    title: title,
+                    dueDate: dueDate,
+                    id: id
+                });
+            }
+
+            // Deletes a todo
+            function removeTodo (idToDelete){
+                todos = todos.filter( function (thetodo){
+                    if(thetodo.id === idToDelete) { // warning: will throw a type error if types not matched
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                });
+            };
+
+//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\//\/\/\/\/\/\
+            render();
+
+            // Controller
+            function addTodo() {
+                const textbox = document.getElementById('todo-title');
+                const title = textbox.value;
+
+                const datePicker = document.getElementById('date-picker');
+                const dueDate = datePicker.value;
+
+                createTodo(title, dueDate);
+
+                render();
+            };
+
+            function deleteTodo(event) {
+                const deleteButton = event.target;
+                const idToDelete = deleteButton.id;
+
+                removeTodo(idToDelete);
+
+                render();
+            };
+
+            // View
+            function render() {
+                // reset the list
+                document.getElementById('todo-list').innerHTML = '';
+
+                todos.forEach(function (todol) {
+                    const todo = document.createElement('div');
+                    todo.innerText = todol.title + ' ' + todol.dueDate;
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.innerText = 'delete';
+                    deleteButton.style = 'margin-left: 12px';
+                    deleteButton.onclick = deleteTodo;
+                    deleteButton.id = todol.id;
+                    todo.appendChild(deleteButton);
+
+                    const todoList = document.getElementById('todo-list');
+                    todoList.appendChild(todo);
+                });
+
+            }
+
+        </script>
+    </body>
+</html>

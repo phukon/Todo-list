@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Cart</title>
+    </head>
+    <body>
+        <h1>Your cart</h1>
+        <button onclick="addToCart('apple')">Apple</button>
+        <button onclick="addToCart('tomato')">Tomato</button>
+        <button onclick="addToCart('eggs')">Eggs</button>
+        <button onclick="clearCart()">Clear</button>
+
+        <div id="cart"></div>
+        <script>
+                                    
+            function addToCart(itemName) {
+                var cart = document.getElementById("cart");
+                var div = document.createElement("div");
+                div.innerHTML = itemName;
+                cart.appendChild(div);
+            };
+
+            function clearCart() {
+                var cart = document.getElementById("cart");
+                while (cart.firstChild) {
+                cart.removeChild(cart.firstChild);
+            }
+        }
+
+            
+        </script>
+    </body>
+</html>
